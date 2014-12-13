@@ -1,0 +1,15 @@
+This is not a URL
+Another line with no URL
+Next are some empty lines
+
+
+
+https://www.google.com.eg/images/srpr/logo11w.png
+https://this_is_not_found/image.jpg
+http://antherurl/image2.jpg
+Here are some other valid URLs
+https://fbstatic-a.akamaihd.net/rsrc.php/v2/yC/r/l6el_tG7uTG.png
+http://www.bing.com/s/a/hpc12.png
+And finally nothing
+
+

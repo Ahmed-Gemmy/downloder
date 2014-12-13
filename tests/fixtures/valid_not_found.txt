@@ -1,0 +1,4 @@
+https://this_is_not_found/image.jpg
+http://antherurl/image2.jpg
+ftp://again/image3.jpg
+ftps://again_also/image4.jpg

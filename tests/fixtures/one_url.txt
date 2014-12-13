@@ -1,0 +1,12 @@
+This is not a URL
+This is also not a URL
+
+
+
+After some empty lines
+A valid URL is here
+https://www.google.com.eg/images/srpr/logo11w.png
+the file ends with some empty lines
+
+
+
