@@ -1,0 +1,10 @@
+This script is used to download and save images given in a plain text file containing URLs for the these images.
+
+Before using install the requirements:
+$ sudo pip install -r requirements.txt
+
+To run unit tests, go to the root directory and run:
+$ nosetests
+
+To use run:
+$ python ./src/image_collector.py --help

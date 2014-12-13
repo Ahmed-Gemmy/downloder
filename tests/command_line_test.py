@@ -39,7 +39,7 @@ class ImagesCollectorCommandLineTest(unittest.TestCase):
         self.assertIn("Options:", std_out)
 
     def test_empty_file_argument(self):
-        p = run("python " + self.script_path + " --save_dir=/tmp/save_dir --images=" + os.path.join(self.files_path, 'empty.txt'))
+        p = run("python " + self.script_path + " --create --save_dir=/tmp/save_dir --images=" + os.path.join(self.files_path, 'empty.txt'))
         std_out = p.stdout.read()
         std_err = p.stderr.read()
         self.assertIn("Exception: Images File is Empty", std_err)
@@ -61,9 +61,8 @@ class ImagesCollectorCommandLineTest(unittest.TestCase):
 
     def test_all_valid(self):
         p = run("python " + self.script_path + " --create --save_dir=/tmp/out_dir --images=" + os.path.join(self.files_path, 'all_valid.txt'))
+        self.assertEquals(4, len(os.listdir("/tmp/out_dir/images/")))
         std_out = p.stdout.read()
         std_err = p.stderr.read()
-        print std_out
-        print "="
-        print std_err
-        print "=="
+        self.assertEqual("", std_out)
+        self.assertEqual("", std_err)

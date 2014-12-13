@@ -39,17 +39,18 @@ class CollectImages():
         self.image_file = image_file
         self.save_dir = save_dir
         self.create_save_dir = create
+        # validating given parameters
         self.validate_params()
+        # Validating urls in file.
         self.validate_urls()
-        # open(os.path.join(self.save_dir, 'Log.log'), 'a').close()
         logging.getLogger('').handlers = []
         logging.basicConfig(filename=os.path.join(self.save_dir, 'Log.log'), filemode="w", level=logging.INFO)
         logging.info('''This is the output for dowloading images found in file: %s
 Valid URLs found: %d
 Invalid URLs found: %d
 Images are saved in %s
-''' % (
-            self.image_file, len(self.valid_urls), len(self.invalid_urls), os.path.join(self.save_dir, 'images/')))
+''' % (self.image_file, len(self.valid_urls), len(self.invalid_urls), os.path.join(self.save_dir, 'images/')))
+        # setting counter to append to image name to avoid overriding images with the same name.
         self.counter = 0
         for url in self.valid_urls:
             self.counter += 1
@@ -92,8 +93,10 @@ Images are saved in %s
             raise Exception("Images File is Empty")
         urls = list(set(urls))
         for img_url in urls:
+            # replacing spaces with the equivalent URL encode %20
             img_url = img_url.strip().replace(' ', '%20')
             parsed_url = urlparse(img_url)
+            #checking valid protocol, and host existence
             if (parsed_url.scheme == 'https' or
                 parsed_url.scheme == 'http' or
                 parsed_url.scheme == 'ftps' or
@@ -115,6 +118,7 @@ Images are saved in %s
         """
         local_filename = str(self.counter) + "_" + url.split('/')[-1].split("?")[0]
         try:
+            #simulating browser header to avoid 502 HTTP bad gateway error
             header = {
                 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36\
                  (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36',
@@ -123,7 +127,7 @@ Images are saved in %s
                 'Accept-Language': 'en-US,en;q=0.8,ar;q=0.6,ms;q=0.4',
                 'Cache-Control': 'max-age=   0',
                 'Connection': 'keep-alive'}
-            req_ad.DEFAULT_RETRIES = 1
+            req_ad.DEFAULT_RETRIES = 5
             s = requests.Session()
             s.mount(url, HTTPAdapter(max_retries=5))
             r = s.get(url, headers=header, stream=True)
@@ -140,6 +144,7 @@ Images are saved in %s
                 self.counter -= 1
                 logging.error("URL: %s not found" % url)
         except Exception, e:
+            #removing corrupted file if saved.
             if os.path.exists(os.path.join(self.save_dir, 'images', local_filename)):
                 os.remove(os.path.join(self.save_dir, 'images', local_filename))
             self.counter -= 1
