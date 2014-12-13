@@ -27,7 +27,8 @@ class CollectImages():
     def __init__(self, image_file, save_dir, create=False):
         """
         The class constructor that execute everything.
-        By initiating this class with the valid arguments, the images are going to be collected and stored to the directory given to the initiator.
+        By initiating this class with the valid arguments, the images are going to be collected and stored to the\
+         directory given to the initiator.
 
         :param image_file: The path to the plain text file containing the images URLs
         :param save_dir: The path to the directory where the images and log file will be saved
@@ -55,7 +56,6 @@ Images are saved in %s
         for url in self.valid_urls:
             self.counter += 1
             self.download_file(url)
-
 
     def validate_params(self):
         """
@@ -96,11 +96,11 @@ Images are saved in %s
             # replacing spaces with the equivalent URL encode %20
             img_url = img_url.strip().replace(' ', '%20')
             parsed_url = urlparse(img_url)
-            #checking valid protocol, and host existence
+            # checking valid protocol, and host existence
             if (parsed_url.scheme == 'https' or
                 parsed_url.scheme == 'http' or
                 parsed_url.scheme == 'ftps' or
-                parsed_url.scheme == 'ftp')\
+                parsed_url.scheme == 'ftp') \
                     and parsed_url.netloc != '':
                 self.valid_urls.append(img_url)
             else:
@@ -118,7 +118,7 @@ Images are saved in %s
         """
         local_filename = str(self.counter) + "_" + url.split('/')[-1].split("?")[0]
         try:
-            #simulating browser header to avoid 502 HTTP bad gateway error
+            # simulating browser header to avoid 502 HTTP bad gateway error
             header = {
                 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36\
                  (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36',
@@ -139,12 +139,12 @@ Images are saved in %s
                             f.flush()
                 f.close()
                 self.verify_image(os.path.join(self.save_dir, 'images', local_filename))
-                logging.info("URL: %s saved to %s" % (url, os.path.join(self.save_dir, 'images', local_filename) ))
+                logging.info("URL: %s saved to %s" % (url, os.path.join(self.save_dir, 'images', local_filename)))
             else:
                 self.counter -= 1
                 logging.error("URL: %s not found" % url)
         except Exception, e:
-            #removing corrupted file if saved.
+            # removing corrupted file if saved.
             if os.path.exists(os.path.join(self.save_dir, 'images', local_filename)):
                 os.remove(os.path.join(self.save_dir, 'images', local_filename))
             self.counter -= 1

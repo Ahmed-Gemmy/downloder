@@ -5,7 +5,6 @@ import os
 from tests.utils import remove_save_dir
 
 
-__author__ = 'Ahmed Gamal A. Ali'
 import unittest
 from src.image_collector import CollectImages
 
