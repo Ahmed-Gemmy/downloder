@@ -1,3 +1,14 @@
+"""
+This file is used to collect images from a given plain text file containing images URLs in each line.
+It can be used via command line, or pragmatically import the CollectImage class eo execute it.
+To see command line help execute:
+$ python image_collector.py --help
+
+Written by Ahmed Gamal A. Ali
+"""
+
+__author__ = 'Ahmed Gamal A. Ali'
+
 from PIL import Image
 import errno
 from sys import argv
@@ -15,11 +26,13 @@ requests.adapters.DEFAULT_RETRIES = 5
 class CollectImages():
     def __init__(self, image_file, save_dir, create=False):
         """
+        The class constructor that execute everything.
+        By initiating this class with the valid arguments, the images are going to be collected and stored to the directory given to the initiator.
 
-        :param image_file:
-        :param save_dir:
-        :param create:
-        :return:
+        :param image_file: The path to the plain text file containing the images URLs
+        :param save_dir: The path to the directory where the images and log file will be saved
+        :param create: A bool value, if True, the save directory will be created if it doesn't exists.
+        :return: None
         """
         self.valid_urls = []
         self.invalid_urls = []
@@ -44,6 +57,13 @@ Images are saved in %s
 
 
     def validate_params(self):
+        """
+        Validates the given paths either they exist or not. It raises OSError if the following cases:
+        1. The given images file does not exists.
+        2. The given save directory does not exists and create option is False.
+        3. Permission denied for the given save directory.
+        :return: None
+        """
         if not os.path.exists(self.image_file):
             raise OSError("File %s Not Found" % self.image_file)
         if not os.path.exists(self.save_dir) and not self.create_save_dir:
@@ -59,6 +79,12 @@ Images are saved in %s
                     raise
 
     def validate_urls(self):
+        """
+        Validates the given images file looking for at least one valid URL in the file.
+        :except "Images File is empty" in case of empty images file.
+        :except "No Valid URLs Found" in case no urls are in the file.
+        :return: None
+        """
         img_file = open(self.image_file, 'r')
         urls = img_file.readlines()
         img_file.close()
@@ -80,6 +106,13 @@ Images are saved in %s
             raise Exception("No Valid URLs Found")
 
     def download_file(self, url):
+        """
+        Downloads the image from the given URL to the save directory.
+        All actions are logged in a Log file in the save directory.
+
+        :param url: Image URL to be downloaded.
+        :return: None
+        """
         local_filename = str(self.counter) + "_" + url.split('/')[-1].split("?")[0]
         try:
             header = {
@@ -113,43 +146,34 @@ Images are saved in %s
             logging.error("URL: %s couldn't be saved. Returned with the following exception: %s" % (url, str(e)))
         return local_filename
 
-    # @staticmethod
-    # def url_exists(url):
-    # req_ad.DEFAULT_RETRIES = 1
-    #     s = requests.Session()
-    #     s.mount(url, HTTPAdapter(max_retries=1))
-    #     header = {
-    #         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36',
-    #         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-    #         'Accept-Encoding': 'gzip, deflate, sdch',
-    #         'Accept-Language': 'en-US,en;q=0.8,ar;q=0.6,ms;q=0.4',
-    #         'Cache-Control': 'max-age=   0',
-    #         'Connection': 'keep-alive'}
-    #
-    #     r = s.head(url, headers=header)
-    #     # print dir(r.cookies)
-    #     # print r.cookies.get_dict()
-    #     # print r.text
-    #     # r.clear_session_cookies()
-    #     print url
-    #     print r.status_code
-    #     print "===="
-    #     valid = r.status_code == requests.codes.ok
-    #     return valid, r.cookies.get_dict()
-
     @staticmethod
     def verify_image(img_path):
+        """
+        Verify that the saved file is a valid image. If not, it will be deleted by the caller method.
+        :param img_path: Path to the downloaded image.
+        :raise exception if the file is corrupted or not an image.
+        :return: None
+        """
         image = Image.open(img_path)
         image.verify()
 
 
 def print_help():
+    """
+    Prints the help file content.
+    :return: None
+    """
     f = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'help.txt'))
     print f.read()
     f.close()
 
 
 def extract_args(args):
+    """
+    Extract arguments and either print the proper output on the screen or start the download process.
+    :param args: List of arguments given to the application from command line.
+    :return: None
+    """
     if '-h' in args or '--help' in args:
         print_help()
         exit()
@@ -175,9 +199,5 @@ def extract_args(args):
     CollectImages(image_file=images, save_dir=save_dir, create=create)
 
 
-def main(args):
-    extract_args(args)
-
-
 if __name__ == '__main__':
-    main(argv)
+    extract_args(argv)

@@ -1,7 +1,9 @@
+__author__ = 'Ahmed Gamal A. Ali'
 import errno
 import os
-import shutil
+
 from tests.utils import remove_save_dir
+
 
 __author__ = 'Ahmed Gamal A. Ali'
 import unittest

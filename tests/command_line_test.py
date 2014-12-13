@@ -1,9 +1,8 @@
+__author__ = 'Ahmed Gamal A. Ali'
 import os
 
 from tests.utils import run
 
-
-__author__ = 'Ahmed Gamal A. Ali'
 import unittest
 
 
