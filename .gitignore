@@ -24,12 +24,6 @@ var/
 pip-log.txt
 pip-delete-this-directory.txt
 
-#Node modules
-static/node_modules/
-
-#Vendors
-static/js/vendors/
-
 # Unit test / coverage reports
 htmlcov/
 .tox/
@@ -38,15 +32,6 @@ htmlcov/
 nosetests.xml
 coverage.xml
 
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-
-# Sphinx documentation
-docs/_build/
 
 #Editor files
 *.swp
@@ -54,22 +39,3 @@ docs/_build/
 *.swn
 *~
 *.idea
-
-#local settings
-*local.py
-
-#mac shit
-*.DS_Store
-
-#celery beat
-*celerybeat-schedule
-
-#svn files
-*.svn
-
-#configuration
-*.cfg
-test.py
-
-#build
-*/build/*
