@@ -1,0 +1,75 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/ develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+#Node modules
+static/node_modules/
+
+#Vendors
+static/js/vendors/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+#Editor files
+*.swp
+*.swo
+*.swn
+*~
+*.idea
+
+#local settings
+*local.py
+
+#mac shit
+*.DS_Store
+
+#celery beat
+*celerybeat-schedule
+
+#svn files
+*.svn
+
+#configuration
+*.cfg
+test.py
+
+#build
+*/build/*

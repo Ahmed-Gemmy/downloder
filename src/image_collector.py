@@ -14,13 +14,13 @@ requests.adapters.DEFAULT_RETRIES = 5
 
 class CollectImages():
     def __init__(self, image_file, save_dir, create=False):
-        '''
+        """
 
         :param image_file:
         :param save_dir:
         :param create:
         :return:
-        '''
+        """
         self.valid_urls = []
         self.invalid_urls = []
         self.image_file = image_file
@@ -69,9 +69,10 @@ Images are saved in %s
             img_url = img_url.strip().replace(' ', '%20')
             parsed_url = urlparse(img_url)
             if (parsed_url.scheme == 'https' or
-                        parsed_url.scheme == 'http' or
-                        parsed_url.scheme == 'ftps' or
-                        parsed_url.scheme == 'ftp') and parsed_url.netloc != '':
+                parsed_url.scheme == 'http' or
+                parsed_url.scheme == 'ftps' or
+                parsed_url.scheme == 'ftp')\
+                    and parsed_url.netloc != '':
                 self.valid_urls.append(img_url)
             else:
                 self.invalid_urls.append(img_url)
@@ -82,7 +83,8 @@ Images are saved in %s
         local_filename = str(self.counter) + "_" + url.split('/')[-1].split("?")[0]
         try:
             header = {
-                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36',
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36\
+                 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36',
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'Accept-Encoding': 'gzip, deflate, sdch',
                 'Accept-Language': 'en-US,en;q=0.8,ar;q=0.6,ms;q=0.4',
@@ -113,7 +115,7 @@ Images are saved in %s
 
     # @staticmethod
     # def url_exists(url):
-    #     req_ad.DEFAULT_RETRIES = 1
+    # req_ad.DEFAULT_RETRIES = 1
     #     s = requests.Session()
     #     s.mount(url, HTTPAdapter(max_retries=1))
     #     header = {
@@ -141,16 +143,40 @@ Images are saved in %s
         image.verify()
 
 
-def extract_argumanets(args):
+def print_help():
+    f = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'help.txt'))
+    print f.read()
+    f.close()
+
+
+def extract_args(args):
+    if '-h' in args or '--help' in args:
+        print_help()
+        exit()
     if len(args) < 3:
         print "Please insert valid arguments."
-        # open(os.)
-        # for arg in args:
-        # i
+        print_help()
+        exit()
+    images = None
+    save_dir = None
+    create = False
+    for arg in args:
+        if arg.startswith("--images") and '=' in arg:
+            images = arg.split("=")[1]
+        if arg.startswith("--save_dir") and '=' in arg:
+            save_dir = arg.split("=")[1]
+        if arg == '--create':
+            create = True
+
+    if images is None or save_dir is None:
+        print "Please insert valid arguments."
+        print_help()
+        exit()
+    CollectImages(image_file=images, save_dir=save_dir, create=create)
 
 
 def main(args):
-    extract_argumanets(args)
+    extract_args(args)
 
 
 if __name__ == '__main__':

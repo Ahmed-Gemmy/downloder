@@ -1,0 +1,7 @@
+Usage: python image_collector.py  [OPTIONS]
+This scripts collect the images listed in a given text file separated by lines into a save directory
+Options:
+  -h, --help                Show this help message and exit
+  --images=FILE_PATH        The full path for the text file containing the list of images' URLs
+  --save_dir=DIRECTORY_PATH The full path for the save directory where the images are going to be saved
+  --create                  Creates the save directory if not available [OPTIONAL]
