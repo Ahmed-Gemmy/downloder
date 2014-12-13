@@ -45,7 +45,7 @@ class CollectImages():
         self.validate_urls()
         logging.getLogger('').handlers = []
         logging.basicConfig(filename=os.path.join(self.save_dir, 'Log.log'), filemode="w", level=logging.INFO)
-        logging.info('''This is the output for dowloading images found in file: %s
+        logging.info('''This is the output for downloading images found in file: %s
 Valid URLs found: %d
 Invalid URLs found: %d
 Images are saved in %s
