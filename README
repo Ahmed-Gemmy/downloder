@@ -3,7 +3,7 @@ This script is used to download and save images given in a plain text file conta
 Before using install the requirements:
 $ sudo pip install -r requirements.txt
 
-To run unit tests, go to the root directory and run:
+To run unit tests, go to the app root directory and run:
 $ nosetests
 
 To use run:
